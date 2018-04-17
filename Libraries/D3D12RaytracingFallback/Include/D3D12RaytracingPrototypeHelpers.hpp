@@ -856,11 +856,11 @@ struct CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC : public D3D12_BUILD_
         Flags = d.Flags;
         NumDescs = d.NumDescs;
         DescsLayout = d.DescsLayout;
-        if (NumDescs > 1)
+        if (DescsLayout == D3D12_ELEMENTS_LAYOUT_ARRAY)
         {
             ppGeometryDescs = d.ppGeometryDescs;
         }
-        else
+        else // D3D12_ELEMENTS_LAYOUT_ARRAY_OF_POINTERS
         {
             pGeometryDescs = d.pGeometryDescs;
         }
