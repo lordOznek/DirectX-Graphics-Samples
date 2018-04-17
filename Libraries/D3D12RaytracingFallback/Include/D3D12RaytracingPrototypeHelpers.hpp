@@ -858,11 +858,11 @@ struct CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC : public D3D12_BUILD_
         DescsLayout = d.DescsLayout;
         if (DescsLayout == D3D12_ELEMENTS_LAYOUT_ARRAY)
         {
-            ppGeometryDescs = d.ppGeometryDescs;
+            pGeometryDescs = d.pGeometryDescs;
         }
         else // D3D12_ELEMENTS_LAYOUT_ARRAY_OF_POINTERS
         {
-            pGeometryDescs = d.pGeometryDescs;
+            ppGeometryDescs = d.ppGeometryDescs;
         }
         DestAccelerationStructureData = destAccelerationStructureData;
         ScratchAccelerationStructureData = scratchAccelerationStructureData;

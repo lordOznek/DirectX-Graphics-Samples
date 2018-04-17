@@ -637,17 +637,13 @@ void D3D12RaytracingSimpleLighting::BuildAccelerationStructures()
 
     // Bottom Level Acceleration Structure desc
     {
-        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAddress(
-            m_bottomLevelAccelerationStructure->GetGPUVirtualAddress(),
-            bottomLevelPrebuildInfo.ResultDataMaxSizeInBytes);
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAddress(m_bottomLevelAccelerationStructure->GetGPUVirtualAddress(), bottomLevelPrebuildInfo.ResultDataMaxSizeInBytes);
         bottomLevelBuildDesc.InitAsBottomLevel(bottomLevelPrebuildInfoDesc, destAddress, scratch);
     }
 
     // Top Level Acceleration Structure desc
     {
-        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAddress(
-            m_topLevelAccelerationStructure->GetGPUVirtualAddress(),
-            topLevelPrebuildInfo.ResultDataMaxSizeInBytes);
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAddress(m_topLevelAccelerationStructure->GetGPUVirtualAddress(), topLevelPrebuildInfo.ResultDataMaxSizeInBytes);
         topLevelBuildDesc.InitAsTopLevel(topLevelPrebuildInfoDesc, instanceDescs->GetGPUVirtualAddress(), destAddress, scratch);
     }
 
