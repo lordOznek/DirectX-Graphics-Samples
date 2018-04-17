@@ -933,7 +933,6 @@ AccelerationStructureBuffers D3D12RaytracingProceduralGeometry::BuildTopLevelAS(
         topLevelBuildDesc.Flags = buildFlags;
         topLevelBuildDesc.DestAccelerationStructureData = { topLevelAS->GetGPUVirtualAddress(), topLevelPrebuildInfo.ResultDataMaxSizeInBytes };
         topLevelBuildDesc.NumDescs = NUM_BLAS;
-        topLevelBuildDesc.pGeometryDescs = nullptr;
         topLevelBuildDesc.InstanceDescs = instanceDescsResource->GetGPUVirtualAddress();
         topLevelBuildDesc.ScratchAccelerationStructureData = { scratch->GetGPUVirtualAddress(), scratch->GetDesc().Width };
     }

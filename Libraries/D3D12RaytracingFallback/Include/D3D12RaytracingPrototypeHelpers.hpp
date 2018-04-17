@@ -310,13 +310,6 @@ public:
             AddExport(Exports[i]);
         }
     }
-    void AddExports(LPCWSTR* Exports, UINT N)
-    {
-        for (UINT i = 0; i < N; i++)
-        {
-            AddExport(Exports[i]);
-        }
-    }
     D3D12_STATE_SUBOBJECT_TYPE Type() { return D3D12_STATE_SUBOBJECT_TYPE_SUBOBJECT_TO_EXPORTS_ASSOCIATION; }
     operator const D3D12_STATE_SUBOBJECT&() const { return *m_pSubobject; }
     operator const D3D12_SUBOBJECT_TO_EXPORTS_ASSOCIATION&() const { return m_Desc; }
@@ -352,6 +345,14 @@ public:
         m_Desc.NumExports++;
         m_Exports.push_back(m_Strings.LocalCopy(Export));
         m_Desc.pExports = m_Exports.data();
+    }
+    template<size_t N>
+    void AddExports(LPCWSTR(&Exports)[N])
+    {
+        for (UINT i = 0; i < N; i++)
+        {
+            AddExport(Exports[i]);
+        }
     }
     D3D12_STATE_SUBOBJECT_TYPE Type() { return D3D12_STATE_SUBOBJECT_TYPE_DXIL_SUBOBJECT_TO_EXPORTS_ASSOCIATION; }
     operator const D3D12_STATE_SUBOBJECT&() const { return *m_pSubobject; }
@@ -805,3 +806,83 @@ private:
 //    VERIFY_SUCCEEDED(spFPDevice->CreateStateObject(RaytracingState2, IID_PPV_ARGS(&spRaytracingPipelineState2)));
 //}
 
+//=============================================================================================================================
+// D3D12 Raytracing prototype helpers
+// 
+// Prototype Helper classes.
+//
+//=============================================================================================================================
+
+//------------------------------------------------------------------------------------------------
+struct CD3D12_GPU_VIRTUAL_ADDRESS_RANGE : public D3D12_GPU_VIRTUAL_ADDRESS_RANGE
+{
+    CD3D12_GPU_VIRTUAL_ADDRESS_RANGE() {}
+    explicit CD3D12_GPU_VIRTUAL_ADDRESS_RANGE(const D3D12_GPU_VIRTUAL_ADDRESS_RANGE &o) :
+        D3D12_GPU_VIRTUAL_ADDRESS_RANGE(o)
+    {}
+    CD3D12_GPU_VIRTUAL_ADDRESS_RANGE(
+        D3D12_GPU_VIRTUAL_ADDRESS startAddress, 
+        UINT64 sizeInBytes
+    )
+    {
+        Init(startAddress, sizeInBytes);
+    }
+    ~CD3D12_GPU_VIRTUAL_ADDRESS_RANGE() {}
+
+    inline void Init(D3D12_GPU_VIRTUAL_ADDRESS startAddress, UINT64 sizeInBytes)
+    {
+        StartAddress = startAddress;
+        SizeInBytes = sizeInBytes;
+    }
+};
+
+//------------------------------------------------------------------------------------------------
+struct CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC : public D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC
+{
+    CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC() {}
+    explicit CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC(const D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC &o) :
+        D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC(o)
+    {}
+    ~CD3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC() {}
+
+    inline void InitAsBottomLevel(
+        const D3D12_GET_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO_DESC& d,
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAccelerationStructureData,
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE scratchAccelerationStructureData,
+        _In_opt_ D3D12_GPU_VIRTUAL_ADDRESS sourceAccelerationStructureData = 0
+    )
+    {
+        Type = d.Type;
+        Flags = d.Flags;
+        NumDescs = d.NumDescs;
+        DescsLayout = d.DescsLayout;
+        if (NumDescs > 1)
+        {
+            ppGeometryDescs = d.ppGeometryDescs;
+        }
+        else
+        {
+            pGeometryDescs = d.pGeometryDescs;
+        }
+        DestAccelerationStructureData = destAccelerationStructureData;
+        ScratchAccelerationStructureData = scratchAccelerationStructureData;
+        SourceAccelerationStructureData = sourceAccelerationStructureData;
+    }
+    inline void InitAsTopLevel(
+        const D3D12_GET_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO_DESC& d,
+        D3D12_GPU_VIRTUAL_ADDRESS instanceDescs,
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE destAccelerationStructureData,
+        CD3D12_GPU_VIRTUAL_ADDRESS_RANGE scratchAccelerationStructureData,
+        _In_opt_ D3D12_GPU_VIRTUAL_ADDRESS sourceAccelerationStructureData = 0
+    )
+    {
+        Type = d.Type;
+        Flags = d.Flags;
+        NumDescs = d.NumDescs;
+        DescsLayout = d.DescsLayout;
+        InstanceDescs = instanceDescs;
+        DestAccelerationStructureData = destAccelerationStructureData;
+        ScratchAccelerationStructureData = scratchAccelerationStructureData;
+        SourceAccelerationStructureData = sourceAccelerationStructureData;
+    }
+};

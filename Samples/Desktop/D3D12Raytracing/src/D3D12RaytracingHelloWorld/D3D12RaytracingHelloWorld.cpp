@@ -493,7 +493,6 @@ void D3D12RaytracingHelloWorld::BuildAccelerationStructures()
         topLevelBuildDesc.Type = D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL;
         topLevelBuildDesc.DestAccelerationStructureData = { m_topLevelAccelerationStructure->GetGPUVirtualAddress(), topLevelPrebuildInfo.ResultDataMaxSizeInBytes };
         topLevelBuildDesc.NumDescs = 1;
-        topLevelBuildDesc.pGeometryDescs = nullptr;
         topLevelBuildDesc.InstanceDescs = instanceDescs->GetGPUVirtualAddress();
         topLevelBuildDesc.ScratchAccelerationStructureData = { scratchResource->GetGPUVirtualAddress(), scratchResource->GetDesc().Width };
     }
