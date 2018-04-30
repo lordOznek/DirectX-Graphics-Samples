@@ -135,6 +135,7 @@
     <ClInclude Include="TemporalEffects.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="UploadHeap.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VectorMath.h" />
   </ItemGroup>
@@ -190,6 +191,7 @@
     <ClCompile Include="TemporalEffects.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="UploadHeap.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

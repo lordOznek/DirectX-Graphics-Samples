@@ -199,6 +199,9 @@
     <ClInclude Include="ReadbackBuffer.h">
       <Filter>Source Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="UploadHeap.h">
+      <Filter>Source Files\UploadHeap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SystemTime.cpp">
@@ -351,6 +354,9 @@
     <ClCompile Include="ReadbackBuffer.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="UploadHeap.cpp">
+      <Filter>Source Files\UploadHeap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -403,6 +409,9 @@
     </Filter>
     <Filter Include="Shaders\BitonicSort">
       <UniqueIdentifier>{29bbd948-3d9f-4b00-a170-52bc3e18d6ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UploadHeap">
+      <UniqueIdentifier>{73c272f0-1366-490f-8856-2b2d3e74eba4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
